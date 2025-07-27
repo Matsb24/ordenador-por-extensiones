@@ -19,8 +19,8 @@ Este proyecto es una aplicación de escritorio en Python que permite analizar y 
 
 1. Clona este repositorio:
     ```bash
-    git clone https://github.com/tu-usuario/Ordenar.git
-    cd Ordenar
+    git clone https://github.com/Matsb24/ordenador-por-extensiones.git
+    cd ordenador-por-extensiones
     ```
 
 2. Ejecuta la aplicación:
