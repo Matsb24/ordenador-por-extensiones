@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import os
-from organizador import contar_extensiones, mostrar_resumen, organizar_archivos, resumen_a_texto
+from organizador import contar_extensiones,  organizar_archivos, resumen_a_texto
+from PIL import Image, ImageTk
 
 class OrganizadorApp:
     def __init__(self, master):
@@ -9,6 +10,15 @@ class OrganizadorApp:
         master.title("Organizador de Archivos")
         master.geometry("500x320")
         
+# Cargar la imagen de fondo
+        fondo_img = Image.open("img/fondo.jpg") 
+        fondo_img = fondo_img.resize((500, 320))
+        fondo_tk = ImageTk.PhotoImage(fondo_img)
+        self.fondo_label = tk.Label(master, image=fondo_tk)
+        self.fondo_label.image = fondo_tk
+        self.fondo_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+# Configurar el grid
         master.grid_columnconfigure(0, weight=1)
         master.grid_columnconfigure(1, weight=1)
         master.grid_columnconfigure(2, weight=1)
