@@ -42,4 +42,11 @@ def organizar_archivos(ruta):
             os.makedirs(carpeta_destino, exist_ok=True)        # Crea la carpeta si no existe
             shutil.move(ruta_archivo, os.path.join(carpeta_destino, archivo))  # Mueve el archivo
 
+def resumen_a_texto(contador):
+    if not contador:
+        return "No se encontraron archivos en la carpeta seleccionada."
+    texto = ""
+    for ext, cantidad in contador.items():
+        texto += f"  - .{ext}: {cantidad} archivos\n"
+    return texto
 
