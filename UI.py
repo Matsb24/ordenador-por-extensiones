@@ -112,6 +112,7 @@ class OrganizadorApp:
 
 def main():
     root = tk.Tk()
+    root.iconbitmap("img/Icono.ico")
     root.resizable(False, False) 
     app = OrganizadorApp(root)
     root.mainloop()
