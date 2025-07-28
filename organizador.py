@@ -29,18 +29,26 @@ def mostrar_resumen(contador):
     for ext, cantidad in contador.items():
         print(f"  - .{ext}: {cantidad} archivos")
 
-def organizar_archivos(ruta):
-    """
-    Mueve los archivos de la carpeta a subcarpetas según su extensión.
-    Crea la carpeta si no existe.
-    """
-    for archivo in os.listdir(ruta): #Recorre todos los elementos en la carpeta
-        ruta_archivo = os.path.join(ruta, archivo) #Une el nombre de la ruta con el nombre del archivo para obtener la ruta del archivo
-        if os.path.isfile(ruta_archivo): # Verifica que sea un archivo (no una carpeta)
-            ext = obtener_extension(archivo) #obtiene la extensión del archivo
-            carpeta_destino = os.path.join(ruta, ext.upper())  # Prepara el nombre de la carpeta destino, siendo la extensión en mayúsculas
-            os.makedirs(carpeta_destino, exist_ok=True)        # Crea la carpeta si no existe
-            shutil.move(ruta_archivo, os.path.join(carpeta_destino, archivo))  # Mueve el archivo
+def organizar_archivos(ruta, extensiones_filtradas=None):
+    archivos = os.listdir(ruta)
+    for archivo in archivos:
+        nombre, extension = os.path.splitext(archivo)
+
+        if extension == "":
+            continue
+
+        ext_limpia = extension[1:].lower()
+
+        if extensiones_filtradas and ext_limpia not in extensiones_filtradas:
+            continue
+
+        carpeta_destino = os.path.join(ruta, ext_limpia.upper())
+        if not os.path.exists(carpeta_destino):
+            os.makedirs(carpeta_destino)
+
+        origen = os.path.join(ruta, archivo)
+        destino = os.path.join(carpeta_destino, archivo)
+        os.rename(origen, destino)
 
 def resumen_a_texto(contador):
     if not contador:
