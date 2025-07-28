@@ -21,14 +21,18 @@ class OrganizadorApp:
         self.canvas_frame = tk.Frame(master, bd=2, relief="groove", bg="white")
         self.canvas_frame.grid(row=1, column=0, columnspan=3, padx=20, pady=5, sticky="we")
 
-        self.canvas = tk.Canvas(self.canvas_frame, height=100)
-        self.scrollbar = tk.Scrollbar(self.canvas_frame, orient="vertical", command=self.canvas.yview)
-        self.scrollable_frame = tk.Frame(self.canvas, bg="white",width=400, height=100)
+        self.canvas_frame.grid_columnconfigure(0, weight=1)
+        self.canvas_frame.grid_columnconfigure(1, weight=0)
+
+        self.canvas = tk.Canvas(self.canvas_frame, height=150, width=420, bg="white")
+        self.scrollbar = tk.Scrollbar(self.canvas_frame, orient="vertical", command=self.canvas.yview, width=18)  # ancho scrollbar
+
+        self.scrollable_frame = tk.Frame(self.canvas, bg="white", width=420)
 
         self.scrollable_frame.bind(
             "<Configure>",
             lambda e: self.canvas.configure(
-                scrollregion=self.canvas.bbox("all"),width=e.width
+                scrollregion=self.canvas.bbox("all")
             )
         )
 
@@ -85,8 +89,8 @@ class OrganizadorApp:
         fila = 0
         for ext, cantidad in contador.items():
             var = tk.BooleanVar(value=True)
-            chk = tk.Checkbutton(self.scrollable_frame, text=f"{ext} ({cantidad} archivo(s))", variable=var, bg="white")
-            chk.grid(row=fila, column=0, sticky="w", padx=5)
+            chk = tk.Checkbutton(self.scrollable_frame, text=f"{ext} ({cantidad} archivo(s))", variable=var, bg="white", anchor="w", width=30, padx=8, pady=3)
+            chk.grid(row=fila, column=0, sticky="we", padx=5, pady=2)
             self.extension_vars[ext] = var
             fila += 1
 
@@ -97,7 +101,7 @@ class OrganizadorApp:
             messagebox.showerror("Error", "Primero debes seleccionar una carpeta.")
             return
 
-        # Recolecta extensiones seleccionadas
+# Recolecta extensiones seleccionadas
         extensiones_a_organizar = [ext for ext, var in self.extension_vars.items() if var.get()]
         if not extensiones_a_organizar:
             messagebox.showwarning("Sin selección", "Debes seleccionar al menos una extensión para organizar.")
