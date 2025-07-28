@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import os
+import sys
 from organizador import contar_extensiones, mostrar_resumen, organizar_archivos, resumen_a_texto
 
 class OrganizadorApp:
@@ -110,9 +111,14 @@ class OrganizadorApp:
         organizar_archivos(self.ruta, extensiones_a_organizar)
         messagebox.showinfo("Éxito", "Archivos ordenados.")
 
+def obtener_ruta_icono(nombre_archivo):
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, "img", nombre_archivo)
+    return os.path.join("img", nombre_archivo)
+
 def main():
     root = tk.Tk()
-    root.iconbitmap("img/Icono.ico")
+    root.iconbitmap(obtener_ruta_icono("Icono.ico"))
     root.resizable(False, False) 
     app = OrganizadorApp(root)
     root.mainloop()
